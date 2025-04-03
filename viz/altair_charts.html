@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Altair Visualizations - Car Price Analysis</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <h1>📊 Altair Visualizations: Car Price Analysis</h1>
+  <p>This page shows interactive Altair charts exported from a Jupyter Notebook.</p>
+
+  <h2>Mileage vs Price Among Different Car Brands</h2>
+  <div id="chart1"></div>
+
+  <h2>Distribution of Car Prices & Number of Cars by Brand</h2>
+  <div id="chart2"></div>
+
+  <script>
+    // Dummy placeholders — in production, you'd replace these with actual Vega-Lite spec JSON
+    const chart1Spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "description": "Mileage vs Price scatter plot",
+      "data": {
+        "url": "car_price_dataset.csv",
+        "format": {"type": "csv"}
+      },
+      "params": [
+        {
+          "name": "Brand",
+          "bind": {
+            "input": "select",
+            "options": [null, "Toyota", "BMW", "Honda", "Ford"],
+            "labels": ["All", "Toyota", "BMW", "Honda", "Ford"],
+            "name": "Make:"
+          },
+          "value": null
+        }
+      ],
+      "mark": "point",
+      "encoding": {
+        "x": {"field": "Mileage", "type": "quantitative"},
+        "y": {"field": "Price", "type": "quantitative"},
+        "color": {
+          "condition": {
+            "param": "Brand",
+            "field": "Brand",
+            "type": "nominal"
+          },
+          "value": "lightgrey"
+        }
+      }
+    };
+
+    const chart2Spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "description": "Distribution of Prices + Count by Brand",
+      "data": {
+        "url": "car_price_dataset.csv",
+        "format": {"type": "csv"}
+      },
+      "vconcat": [
+        {
+          "params": [
+            {
+              "name": "Brand",
+              "bind": {
+                "input": "select",
+                "options": [null, "Toyota", "BMW", "Honda", "Ford"],
+                "labels": ["All", "Toyota", "BMW", "Honda", "Ford"],
+                "name": "Make:"
+              },
+              "value": null
+            }
+          ],
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "field": "Price",
+              "type": "quantitative",
+              "bin": {"extent": [2000, 20000], "step": 2000}
+            },
+            "y": {"aggregate": "count", "type": "quantitative"},
+            "color": {
+              "condition": {
+                "param": "Brand",
+                "field": "Brand",
+                "type": "nominal"
+              },
+              "value": "lightgrey"
+            }
+          }
+        },
+        {
+          "mark": "bar",
+          "encoding": {
+            "x": {"field": "Brand", "type": "nominal", "sort": "-y"},
+            "y": {"aggregate": "count", "type": "quantitative"},
+            "color": {
+              "condition": {
+                "param": "Brand",
+                "field": "Brand",
+                "type": "nominal"
+              },
+              "value": "lightgrey"
+            }
+          }
+        }
+      ]
+    };
+
+    vegaEmbed('#chart1', chart1Spec);
+    vegaEmbed('#chart2', chart2Spec);
+  </script>
+</body>
+</html>

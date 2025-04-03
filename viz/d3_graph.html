@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .bar {
+            fill: steelblue;
+        }
+        .bar:hover {
+            fill: orange;
+        }
+        .axis-label {
+            font-size: 14px;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            visibility: hidden;
+        }
+        #controls {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Dropdowns for Filtering -->
+<div id="controls">
+    <label for="condition">Car Condition:</label>
+    <select id="condition">
+        <option value="all">All</option>
+        <option value="newer">Newer (≤5 years old)</option>
+        <option value="older">Older (>5 years old)</option>
+    </select>
+
+    <label for="feature">Group By:</label>
+    <select id="feature">
+        <option value="Brand">Brand</option>
+        <option value="Model">Model</option>
+        <option value="Year">Year</option>
+        <option value="Transmission">Transmission</option>
+        <option value="Fuel_Type">Fuel Type</option>
+        <option value="Engine_Size">Engine Size</option>
+        <option value="Mileage">Mileage</option>
+        <option value="Doors">Doors</option>
+        <option value="Owner_Count">Owner Count</option>
+    </select>
+</div>
+
+<svg width="900" height="500"></svg>
+<div class="tooltip"></div>
+
+<script>
+    const width = 900, height = 500, margin = { top: 40, right: 20, bottom: 100, left: 80 };
+    const svg = d3.select("svg").attr("width", width).attr("height", height);
+    const tooltip = d3.select(".tooltip");
+    let allData = [];
+
+    function updateChart(condition, feature) {
+        let filteredData = allData;
+        if (condition === "newer") {
+            filteredData = allData.filter(d => d.Year >= 2020);
+        } else if (condition === "older") {
+            filteredData = allData.filter(d => d.Year < 2020);
+        }
+
+        const groupedData = d3.rollups(
+            filteredData,
+            v => d3.mean(v, d => d.Price),
+            d => d[feature]
+        ).map(([key, Price]) => ({ key, Price }));
+
+        const numericalFeatures = ["Year", "Engine_Size", "Mileage", "Doors", "Owner_Count"];
+        if (numericalFeatures.includes(feature)) {
+            groupedData.sort((a, b) => a.key - b.key);
+        } else {
+            groupedData.sort((a, b) => b.Price - a.Price);
+        }
+
+        const xScale = d3.scaleBand()
+            .domain(groupedData.map(d => d.key))
+            .range([margin.left, width - margin.right])
+            .padding(0.3);
+
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(groupedData, d => d.Price)])
+            .nice()
+            .range([height - margin.bottom, margin.top]);
+
+        svg.selectAll("*").remove();
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(xScale).tickFormat(d => isNaN(d) ? d : d3.format("d")(d)))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        svg.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(yScale));
+
+        svg.selectAll(".bar")
+            .data(groupedData)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", d => xScale(d.key))
+            .attr("y", d => yScale(d.Price))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => height - margin.bottom - yScale(d.Price))
+            .on("mouseover", function(event, d) {
+                tooltip.style("visibility", "visible")
+                       .text(`$${d.Price.toFixed(2)}`)
+                       .style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 20) + "px");
+                d3.select(this).attr("fill", "orange");
+            })
+            .on("mousemove", function(event) {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 20) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.style("visibility", "hidden");
+                d3.select(this).attr("fill", "steelblue");
+            });
+
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", height - 20)
+            .attr("text-anchor", "middle")
+            .attr("class", "axis-label")
+            .text(feature);
+
+        svg.append("text")
+            .attr("x", -height / 2)
+            .attr("y", 20)
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "middle")
+            .attr("class", "axis-label")
+            .text("Average Price ($)");
+    }
+
+    d3.csv("car_price_dataset.csv").then(data => {
+        data.forEach(d => {
+            d.Price = +d.Price;
+            d.Year = +d.Year;
+            d.Engine_Size = +d.Engine_Size;
+            d.Mileage = +d.Mileage;
+            d.Doors = +d.Doors;
+            d.Owner_Count = +d.Owner_Count;
+        });
+
+        allData = data;
+        updateChart("all", "Brand");
+
+        d3.select("#condition").on("change", function() {
+            updateChart(this.value, d3.select("#feature").node().value);
+        });
+
+        d3.select("#feature").on("change", function() {
+            updateChart(d3.select("#condition").node().value, this.value);
+        });
+
+    }).catch(error => console.error("Error loading the CSV file:", error));
+</script>
+
+</body>
+</html>
