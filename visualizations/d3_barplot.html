@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Bar Chart – Car Price Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="../styles.css"> <!-- havent added these styles yet but will keep here for the meantime -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .axis-label {
+      font-size: 14px;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 12px;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #controls {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Dynamic D3 Bar Chart: Grouped by Feature</h2>
+
+  <div id="controls">
+    <label for="condition">Car Condition:</label>
+    <select id="condition">
+      <option value="all">All</option>
+      <option value="newer">Newer (≤5 years old)</option>
+      <option value="older">Older (>5 years old)</option>
+    </select>
+
+    <label for="feature">Group By:</label>
+    <select id="feature">
+      <option value="Brand">Brand</option>
+      <option value="Model">Model</option>
+      <option value="Year">Year</option>
+      <option value="Transmission">Transmission</option>
+      <option value="Fuel_Type">Fuel Type</option>
+      <option value="Engine_Size">Engine Size</option>
+      <option value="Doors">Doors</option>
+      <option value="Owner_Count">Owner Count</option>
+    </select>
+  </div>
+
+  <svg width="900" height="500"></svg>
+  <div class="tooltip"></div>
+
+  <script src="../d3/d3_barplot.js"></script>
+
+</body>
+</html>

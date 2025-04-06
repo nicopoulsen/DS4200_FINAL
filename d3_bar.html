@@ -6,7 +6,6 @@
     <title>Car Price Analysis</title>
     <script src="https://d3js.org/d3.v7.min.js">
         
-    // JS code for the bar chart    
     </script>
     <style>
         body {
@@ -37,7 +36,6 @@
 </head>
 <body>
 
-<!-- Dropdowns for Filtering -->
 <div id="controls">
     <label for="condition">Car Condition:</label>
     <select id="condition">
@@ -79,19 +77,17 @@
         filteredData = allData.filter(d => d.Year < 2020);
     }
 
-    // Compute average price per selected feature
     const groupedData = d3.rollups(
         filteredData,
         v => d3.mean(v, d => d.Price),
         d => d[feature]
     ).map(([key, Price]) => ({ key, Price }));
 
-    // Determine if the feature is numerical
     const numericalFeatures = ["Year", "Engine_Size", "Mileage", "Doors", "Owner_Count"];
     if (numericalFeatures.includes(feature)) {
-        groupedData.sort((a, b) => a.key - b.key); // Sort numerically
+        groupedData.sort((a, b) => a.key - b.key); 
     } else {
-        groupedData.sort((a, b) => b.Price - a.Price); // Sort by price for categorical
+        groupedData.sort((a, b) => b.Price - a.Price); 
     }
 
     const xScale = d3.scaleBand()
@@ -104,13 +100,12 @@
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    // Remove previous elements before redrawing
     svg.selectAll("*").remove();
 
     // Add axes
     svg.append("g")
         .attr("transform", `translate(0,${height - margin.bottom})`)
-        .call(d3.axisBottom(xScale).tickFormat(d => isNaN(d) ? d : d3.format("d")(d))) // Format numbers
+        .call(d3.axisBottom(xScale).tickFormat(d => isNaN(d) ? d : d3.format("d")(d))) 
         .selectAll("text")
         .attr("transform", "rotate(-45)")
         .style("text-anchor", "end");
@@ -123,15 +118,14 @@
     .attr("transform", `translate(0,${height - margin.bottom})`)
     .call(d3.axisBottom(xScale).tickFormat(d => {
         if (feature === "Engine_Size") {
-            return d3.format(".1f")(d); // Format with 1 decimal place
+            return d3.format(".1f")(d); 
         }
-        return isNaN(d) ? d : d3.format("d")(d); // Default formatting for other features
+        return isNaN(d) ? d : d3.format("d")(d); 
     }))
     .selectAll("text")
     .attr("transform", "rotate(-45)")
     .style("text-anchor", "end");
 
-    // Draw bars
     svg.selectAll(".bar")
         .data(groupedData)
         .enter().append("rect")
@@ -156,7 +150,6 @@
             d3.select(this).attr("fill", "steelblue");
         });
 
-    // Add axis labels
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", height - 20)
@@ -175,7 +168,6 @@
 
 
     d3.csv("car_price_dataset.csv").then(data => {
-        // Convert data types
         data.forEach(d => {
             d.Price = +d.Price;
             d.Year = +d.Year;
@@ -187,10 +179,8 @@
 
         allData = data;
 
-        // Initial render (default: all cars grouped by Brand)
         updateChart("all", "Brand");
 
-        // Add event listeners for dropdowns
         d3.select("#condition").on("change", function() {
             updateChart(this.value, d3.select("#feature").node().value);
         });
