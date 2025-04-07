@@ -1,0 +1,104 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #a18cd1, #fbc2eb);
+    margin: 0;
+    padding: 40px 20px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    text-align: center;
+    color: white;
+    font-size: 2.8rem;
+    margin-bottom: 50px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+  
+  .viz-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 0 auto 60px auto;
+    max-width: 1000px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .viz-section:hover {
+    transform: scale(1.01);
+  }
+  
+  .viz-section h2 {
+    font-size: 1.8rem;
+    color: #5a2d82;
+    margin-bottom: 15px;
+  }
+  
+  .viz-section h3 {
+    font-size: 1.3rem;
+    margin-top: 20px;
+    color: #333;
+  }
+  
+  .viz-section p {
+    color: #555;
+  }
+  
+  .viz-section img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  
+  iframe {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  input, button {
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #7e57c2;
+    outline: none;
+    box-shadow: 0 0 5px rgba(126, 87, 194, 0.5);
+  }
+  
+  button {
+    background: #7e57c2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  }
+  
+  button:hover {
+    background: #6a42af;
+  }
+  
+  #carDetails {
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  #carDetails div {
+    background-color: #f5f2f9;
+    border-left: 5px solid #7e57c2;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    color: #444;
+  }
+  

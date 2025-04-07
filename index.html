@@ -46,8 +46,8 @@
   <h1>Car Price Dataset: Visual Analytics Dashboard</h1>
 
   <div class="viz-section">
-    <h2>📊 Altair Interactive Scatter Plot</h2>
-    <p>This interactive Altair chart lets you filter by car brand and compare Year vs Price.</p>
+    <h2>Altair Interactive Scatter Plot</h2>
+    <p>add analysis.</p>
     <iframe src="visualizations/charts_altair.html" height="700" id="altair-frame"></iframe>
     <br><br>
     <button onclick="resetAltair()">🔄 Reset Zoom</button>
@@ -70,19 +70,35 @@
     <div id="carDetails"></div>
   </div>
 
-  <div class="viz-section">
-    <h2>🖼️ Static Visualizations (KDE, Lineplot, Heatmap)</h2>
-    <p>These three static visualizations help you understand feature relationships, brand price trends, and correlations.</p>
-    <iframe src="visualizations/matplotlib_static.html" height="1000"></iframe>
-  </div>
 
   <div class="viz-section">
-    <h2>📈 D3 Interactive Bar Chart</h2>
-    <p>Explore average prices grouped by various features using dropdown filters for both category and car condition.</p>
+    <h2>Static Visualizations (KDE, Lineplot, Heatmap)</h2>
+    <p>add analysis</p>
+  
+    <div style="margin-bottom: 30px;">
+      <h3>Scatter + KDE: Mileage vs Price</h3>
+      <img src="visualizations/images/plot1.png" alt="KDE Plot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+  
+    <div style="margin-bottom: 30px;">
+      <h3>Lineplot: Brand Depreciation Over Time</h3>
+      <img src="visualizations/images/plot2.png" alt="Lineplot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+  
+    <div>
+      <h3>Heatmap: Correlation Between Features</h3>
+      <img src="visualizations/images/plot3.png" alt="Heatmap" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+  </div>
+  
+
+  <div class="viz-section">
+    <h2>D3 Interactive Bar Chart</h2>
+    <p>add analysis</p>
     <iframe src="visualizations/d3_barplot.html" height="750"></iframe>
   </div>
 
-
+  <!-- this is for the car lookup-->
   <script>
     let carData = [];
 
