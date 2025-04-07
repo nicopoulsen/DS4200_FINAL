@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Price Data Visualizations</title>
+  <title>Predicting Car Prices: The Role of Features and Market Trends</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     body {
@@ -13,7 +13,11 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 30px;
     }
 
     .viz-section {
@@ -45,9 +49,105 @@
 
   <h1>Car Price Dataset: Visual Analytics Dashboard</h1>
 
-  <div class="viz-section">
+  <div style="text-align:center; margin-bottom: 40px;">
+    <h2 style="font-size: 28px; margin-bottom: 10px;">Guiding Question</h2>
+    <p style="font-size: 22px; font-weight: 500; max-width: 900px; margin: 0 auto; line-height: 1.4;">
+      Which vehicle attributes have the greatest impact on resale price,<br>
+      and how do market trends influence car depreciation?
+    </p>
+    <p style="font-style: italic; margin-top: 10px; font-size: 16px;">Nico Poulsen, Carson Hunter, Miguel Gonzales</p>
+  </div>
+
+  <div class="viz-section" style="background-color: #f2e7fa;">
+    <h2>Introduction, Topic & Tasks</h2>
+    <p>
+      The auto industry is constantly changing due to a mix of shifting trends, the economy, and the current political landscape. Features that may have been unfathomable 20 years ago like partial self-driving capabilities and touchscreen displays have become the standard in today’s market, forcing companies to continuously adapt and innovate. The United States is one of the greatest players in this industry, with the <a href="https://www.cargroup.org/publication/contribution-of-the-automotive-industry-to-the-economies-of-all-fifty-state-and-the-united-states/" target="_blank">Center for Automotive Research</a> estimating 1.7 million jobs directly tied to it.
+    </p>
+    <p>
+      Because of the significant role it has played both historically and now, it is crucial to understand and predict consumer trends in order to further industry growth. Understanding the shifts in the car market over time, especially when contextualizing these trends with the surrounding societal and economic landscape, can help stakeholders preemptively capture the dynamic needs of consumers. By analyzing cars and their features, one also can gain understanding of how they affect the sale price of a car. On the consumer side, having information on features and sale price can help to ensure a fair price is being paid for a given car. As <a href="https://edition.cnn.com/2022/02/19/business/car-buyers-sticker-shock/index.html" target="_blank">CNBC reports</a>, “82% of consumers are paying above sticker price for a new car”, so robust analyses could help to power informed decisions.
+    </p>
+    <p>
+      In this project, we aimed to answer key questions using five visualizations—three static and two interactive—to explore which features most affect car prices and how market trends shape depreciation.
+    </p>
+  </div>
+  
+  
+
+
+
+
+  <div class="viz-section" style="background-color: #f2e7fa;">
+    <h2>About the Data</h2>
+    <p>
+      The dataset we selected focuses on cars and their prices, providing valuable insights into the factors that influence vehicle pricing. 
+      This dataset, sourced from Kaggle, contains 10,000 entries, each representing a different car with its key specifications and market price.
+    </p>
+    <p>
+      With 10 columns, it includes detailed information about each vehicle, allowing for in-depth analysis. 
+      The dataset captures attributes such as:
+    </p>
+    <ul style="line-height: 1.6;">
+      <li><strong>Brand</strong> (e.g., Toyota, Ford, BMW)</li>
+      <li><strong>Model</strong> (e.g., Camry, Mustang, X5)</li>
+      <li><strong>Year</strong> (manufacturing year of the car)</li>
+      <li><strong>Engine Size</strong> (e.g., 1.5L, 2.0L)</li>
+      <li><strong>Fuel Type</strong> (Petrol, Diesel, Electric, Hybrid)</li>
+      <li><strong>Transmission</strong> (Manual, Automatic)</li>
+      <li><strong>Mileage</strong> (total distance the car has been driven)</li>
+      <li><strong>Doors</strong> (number of doors in the car)</li>
+      <li><strong>Owner Count</strong> (number of previous owners)</li>
+      <li><strong>Selling Price</strong> of the car</li>
+    </ul>
+  </div>
+
+  <div class="viz-section" style="background-color: #f2e7fa;">
+    <h2>Static Visualizations (Heatmap, KDE, Lineplot)</h2>
+    <p>Below are key static plots that helped us explore our dataset and understand price drivers.</p>
+
+    <div style="margin-bottom: 30px;">
+      <h3>Heatmap: Correlation Between Features</h3>
+      <p>
+        This heatmap, generated with Seaborn, visualizes the correlation coefficients (Pearson) between various car features. Notably, we can see that <strong>Mileage</strong> has a moderate negative correlation with <strong>Price</strong> (-0.55), which implies that as mileage increases, the price of a car will decrease. Additionally, the <strong>Year</strong> feature has the strongest positive correlation (0.66) which suggests that newer cars are generally more expensive. On the other hand, features like <strong>Engine Size</strong> (0.36) show slight positive correlations, while <strong>Number of Doors</strong> appears to have no correlation with price.
+      </p>
+      <img src="visualizations/images/plot3.png" alt="Heatmap" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+
+    <div style="margin-bottom: 30px;">
+      <h3>Scatter + KDE: Mileage vs Price</h3>
+      <p>
+        This scatter plot with KDE (Kernel Density Estimate) shows how car <strong>mileage is negatively associated with resale price</strong>. As expected, higher mileage generally leads to a drop in price. The KDE shading highlights clusters of high-density data, particularly among lower-priced vehicles with mid-range mileage. This visualization reinforces our earlier finding from the heatmap and emphasizes the importance of mileage as a resale predictor.
+      </p>
+      <img src="visualizations/images/plot1.png" alt="KDE Plot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+
+    <div>
+      <h3>Lineplot: Brand Depreciation Over Time</h3>
+      <p>
+        This line chart visualizes the <strong>average car price per brand across manufacturing years</strong>. We can observe that car prices steadily increase for newer models, although some brands depreciate at different rates. Luxury brands tend to retain value better, while economy brands show steeper drops. The shaded confidence intervals around the lines give us insight into price variance and volatility within each brand.
+      </p>
+      <img src="visualizations/images/plot2.png" alt="Lineplot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
+    </div>
+  </div>
+  <div class="viz-section" style="background-color: #f2e7fa;">
     <h2>Altair Interactive Scatter Plot</h2>
-    <p>add analysis.</p>
+    <p>
+      This interactive Altair chart visualizes how <strong>car prices vary over the years</strong> for multiple brands. The scatter plot allows users to explore brand-specific pricing patterns by plotting each vehicle's <strong>manufacturing year on the x-axis</strong> and its <strong>resale price on the y-axis</strong>. Each point represents an individual vehicle, making it easy to identify clusters of high- or low-priced models across time.
+    </p>
+    <p>
+      By using the <strong>brand dropdown</strong>, users can isolate specific manufacturers and compare how each brand's vehicles depreciate with age. The <strong>price slider</strong> below the plot provides additional control to focus on budget-friendly or high-end vehicles, helping to remove outliers or narrow in on a target price range. This makes it especially useful for consumers who want to identify good-value options or analysts seeking to understand brand-level depreciation trends.
+    </p>
+    <p>
+      The plot is zoomable and pan-enabled, letting users inspect specific regions more closely. Additionally, a <strong>Reset Zoom</strong> button is provided for convenience to return to the default view at any time. This interactivity turns a traditional static plot into a flexible exploration tool that supports both high-level overviews and focused inspections.
+    </p>
+  
+    <h4 style="margin-top: 20px;">How to Use:</h4>
+    <ul>
+      <li><strong>Select Brand(s):</strong> Use the dropdown menu to filter and compare specific car brands.</li>
+      <li><strong>Adjust Price Range:</strong> Use the slider to limit the range of car prices shown, removing outliers or focusing on affordable options.</li>
+      <li><strong>Zoom and Pan:</strong> Click and drag to move around the chart or use scroll to zoom in and out.</li>
+      <li><strong>Reset Zoom:</strong> Click the button below the chart to return to the default view.</li>
+    </ul>
+  
     <iframe src="visualizations/charts_altair.html" height="700" id="altair-frame"></iframe>
     <br><br>
     <button onclick="resetAltair()">🔄 Reset Zoom</button>
@@ -56,12 +156,12 @@
   <script>
     function resetAltair() {
       const iframe = document.getElementById("altair-frame");
-      iframe.src = iframe.src; 
+      iframe.src = iframe.src;
     }
   </script>
   
 
-  <div class="viz-section">
+<div class="viz-section" style="background-color: #f2e7fa;">
     <h2>🔍 Search for a Car by ID</h2>
     <p>After exploring the scatter plot above, enter the ID of a car you liked to view more details.</p>
     <label for="carID">Enter Car ID:</label>
@@ -70,35 +170,52 @@
     <div id="carDetails"></div>
   </div>
 
-
-  <div class="viz-section">
-    <h2>Static Visualizations (KDE, Lineplot, Heatmap)</h2>
-    <p>add analysis</p>
-  
-    <div style="margin-bottom: 30px;">
-      <h3>Scatter + KDE: Mileage vs Price</h3>
-      <img src="visualizations/images/plot1.png" alt="KDE Plot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
-    </div>
-  
-    <div style="margin-bottom: 30px;">
-      <h3>Lineplot: Brand Depreciation Over Time</h3>
-      <img src="visualizations/images/plot2.png" alt="Lineplot" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
-    </div>
-  
-    <div>
-      <h3>Heatmap: Correlation Between Features</h3>
-      <img src="visualizations/images/plot3.png" alt="Heatmap" style="width: 80%; max-width: 700px; border-radius: 10px; display: block; margin: 10px auto;">
-    </div>
-  </div>
-  
-
-  <div class="viz-section">
+  <div class="viz-section" style="background-color: #f2e7fa;">
     <h2>D3 Interactive Bar Chart</h2>
-    <p>add analysis</p>
-    <iframe src="visualizations/d3_barplot.html" height="750"></iframe>
-  </div>
+    <p>
+      These interactive bar charts, created with D3.js, analyze car prices based on various attributes. These charts dynamically display the average car prices grouped by selected features, such as brand, model, year, transmission type, fuel type, engine size, number of doors, or owner count. Users can filter the data by car condition (e.g., newer cars that are 5 years old or less, or older cars over 5 years old) and select a grouping feature through dropdown menus. The chart updates automatically when filters are applied or grouping features are changed, ensuring real-time visualization of insights based on user preferences.
+    </p>
+    <p>
+      The charts incorporate several interactive elements to enhance usability. Bars change color from steel blue to orange when hovered over, and a tooltip appears to display the exact average price for the hovered bar. The x-axis represents the selected feature's categories (e.g., brands or years), while the y-axis shows average price values in dollars. Numerical features like mileage or engine size are sorted numerically, whereas categorical features like brand are sorted by price values.
+    </p>
+    <p>
+      These visualizations allow users to identify trends such as which brands, models, or fuel types tend to have higher average prices. They also enable comparisons across groups—for instance, analyzing differences between newer and older cars or examining how average prices vary with attributes like transmission or engine size. Such insights can support decision-making related to car pricing strategies or purchasing preferences and help consumers understand which vehicle attributes have the greatest impact on resale price. According to the D3 bar charts, the features that had the most variation in average price were...
+    </p>
+  
+    <h4 style="margin-top: 20px;">How to Use:</h4>
+    <ul>
+      <li><strong>Select Car Condition:</strong> Use the dropdown to choose between all cars, newer cars, or older cars.</li>
+      <li><strong>Group By:</strong> Use the second dropdown to categorize the data by different vehicle attributes like Brand, Fuel Type, or Engine Size.</li>
+      <li>The chart updates in real time based on your selections for a more targeted comparison.</li>
+    </ul>
+  
+    <iframe src="visualizations/d3_barplot.html" height="570"></iframe>
 
-  <!-- this is for the car lookup-->
+  </div>
+  
+
+  <div class="viz-section" style="background-color: #f2e7fa;">
+    <h2>Conclusion</h2>
+    <p>
+      The analysis proved highly insightful in breaking down and understanding car prices based on a variety of vehicle attributes. The heatmap showed that features like <strong>mileage</strong> and <strong>year</strong> have strong correlations with price—mileage being the single greatest determining factor. This result is intuitive, as both year and mileage are proxies for a car's wear and tear over time.
+    </p>
+    <p>
+      To further explore these key attributes, we created additional visualizations. The <strong>scatter plot with KDE</strong> confirmed the strong negative relationship between mileage and price, where the highest density of cars followed a near-linear downward trend. We then built a <strong>line plot</strong> to illustrate car depreciation over time, clearly showing that older vehicles were significantly less expensive in a nearly perfect linear pattern.
+    </p>
+    <p>
+      While the line plot was helpful, we also wanted a more interactive, user-centered way to explore year and price. The result was an <strong>interactive Altair plot</strong> where users can filter by brand, adjust price thresholds, and even click on specific car IDs to get more details. This not only visualizes the year-price relationship but makes it actionable for users.
+    </p>
+    <p>
+      Finally, to explore <strong>categorical variables</strong> like brand, fuel type, or transmission, we developed an <strong>interactive D3 bar chart</strong>. Users can toggle car condition (e.g., older vs. newer) and group the data by various features to compare average prices. This allowed us to analyze the effects of both numeric and categorical attributes on resale value.
+    </p>
+    <p>
+      In the end, we found that <strong>year and mileage</strong> have the strongest impact on vehicle pricing. By combining both static and interactive tools, we created a dashboard that supports users in visual exploration, targeted vehicle research, and deeper understanding of pricing patterns—addressing the needs of both consumers and analysts alike. For future work, we believe that machine learning models could be used on this dataset to predict car price based on these features, which we have determined to have noticeable effects. By doing, for example, a regression model, users could input a given vehicle’s attributes and see it’s predicted price on a graph, showing what a fair market price would be for a car they’re considering. Also, if users wanted to compare a car they already know the price of to this dataset, adding functionality to add their own data points to the visualizations would give users an easy way to determine if they’re vehicle falls inline with current market trends. 
+
+    </p>
+  </div>
+  
+  
+
   <script>
     let carData = [];
 
