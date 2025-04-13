@@ -27,7 +27,7 @@ chart = alt.Chart(df).mark_point().encode(
     x=alt.X('Year:Q', scale=alt.Scale(domain=[2000, 2024]), axis=alt.Axis(format='d')),
     y='Price:Q',
     color=alt.condition(brand_select, alt.Color('Brand:N'), alt.value('lightgrey')),
-    tooltip=['index', 'Brand:N', 'Model:N', 'Year:Q', 'Price:Q']
+    tooltip=['index', 'Brand:N', 'Model:N', 'Year:Q', 'Price:Q', 'Mileage:Q']
 ).add_params(
     brand_select,
     price_param
