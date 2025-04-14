@@ -26,7 +26,7 @@ plt.close()
 
 # Lineplot
 plt.figure(figsize=(12,6))
-sns.lineplot(data=df, x='Year', y='Price', hue='Brand')
+sns.lineplot(data=df, x='Year', y='Price')
 plt.title('Brand Price Depreciation Over Time')
 plt.xlabel('Year of Manufacture')
 plt.ylabel('Average Price')
@@ -39,7 +39,7 @@ plt.close()
 plt.figure(figsize=(10, 8))
 pred = df[['Price','Mileage','Doors','Year','Owner_Count','Engine_Size']]
 corr = pred.corr()
-sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f")
+sns.heatmap(corr, annot=True, center=0, cmap='coolwarm', fmt=".2f")
 plt.title('Heatmap Depicting Correlation Matrix for Car Features')
 plt.tight_layout()
 plt.savefig(f"{img_dir}/plot3.png")
