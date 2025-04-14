@@ -4,10 +4,7 @@
 1. Heatmap: Correlations Between Features
 
 
-For our first visualization, we created a heatmap with Seaborn, which shows a visual representation of the correlation matrix between features and car price. It shows that mileage has the greatest impact on car price, with the strongest magnitude of correlation. Year is the second most significant feature, with the next greatest magnitude of correlation. Door count had the least impact on car price, with an almost 0 correlation coefficient. The strong correlation between Year and Price may reflect not only the age of the vehicle but also the integration of modern features and compliance with recent regulations. The negative correlation between Mileage and Price highlights the importance of vehicle usage in determining value, which could be further explored by examining how this relationship varies across different vehicle types or brands.
-
-
-
+For our first visualization, we created a heatmap with Seaborn, which shows a visual representation of the correlation matrix between features and car price. We designed the heatmap where the more positively correlated the features are, their correlation is closer to red. Blue indicates that features are more negatively correlated. This makes it easier for the viewer to focus on key correlations. It shows that mileage has the greatest impact on car price, with the strongest magnitude of correlation. Year is the second most significant feature, with the next greatest magnitude of correlation. Door count had the least impact on car price, with an almost 0 correlation coefficient. The strong correlation between Year and Price may reflect not only the age of the vehicle but also the integration of modern features and compliance with recent regulations. The negative correlation between Mileage and Price highlights the importance of vehicle usage in determining value, which could be further explored by examining how this relationship varies across different vehicle types or brands.
 
 
 
